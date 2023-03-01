@@ -44,7 +44,7 @@ def extract_environment(root: dict, environment: dict, variables: dict, user_var
 # Get path value
 def get_path(root: dict, variables: dict, user_variables: dict) -> str | None:
     if 'path' in root:
-        path = replace_with_variables(root['path'], variables, user_variables)
+        path = os.path.expanduser(replace_with_variables(root['path'], variables, user_variables))
         regex = re.compile(path)
         match = regex.match(os.getcwd())
         return match.group() if match else None
