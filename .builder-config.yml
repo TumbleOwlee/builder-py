@@ -1,0 +1,27 @@
+variables:
+  variable1: 'some value'
+  variable2: 1
+  variable3: true
+environment:
+  SOME_VARIABLE1: 'somevalue'
+  SOME_VARIABLE2: 1
+  SOME_VARIABLE3: true
+projects:
+  Gateway:
+    path: '~/win-rearrange-cxx'
+    variables:
+      variable4: 'some value'
+      variable5: 1
+      variable6: true
+    environment:
+      SOME_VARIABLE4: 'somevalue'
+      SOME_VARIABLE5: 1
+      SOME_VARIABLE6: true
+    build:
+      - mkdir -p ./build/{os}/{bt}
+      - cd ./build/{os}/{bt}
+      - cmake -G "Unix Makefiles" ../../..
+      - cmake --build . --config {bt}
+    test:
+      - cd ./build/{os}/{bt}
+      - ctest
