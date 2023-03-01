@@ -153,16 +153,17 @@ def main():
     # Loop over all projects
     for p in config['projects']:
         project = config['projects'][p]
-        path = get_path(project, extract_variables(project, variables, user_variables), user_variables)
+        project_vars = extract_variables(project, variables, user_variables)
+        path = get_path(project, project_vars, user_variables)
         # If path doesn't match, check next one
         if not path:
             continue
         # Perform build
         if not args.no_build:
-            build(project, path, variables, environment, user_variables)
+            build(project, path, project_vars, environment, user_variables)
         # Execute tests
         if args.test:
-            test(project, path, variables, environment, user_variables)
+            test(project, path, project_vars, environment, user_variables)
         # Porject is handled, return
         return
     error("No matching configuration entry found.")
